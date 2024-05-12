@@ -28,7 +28,19 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        switch ($request->user()->role) {
+            case 'admin':
+                $url = "/profile";
+                break;
+            case 'user':
+                $url = "/dashboard";
+                break;
+            default:
+                $url = "";
+                break;
+        }
+
+        return redirect()->intended($url);
     }
 
     /**
@@ -42,6 +54,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/register');
     }
 }

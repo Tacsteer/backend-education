@@ -15,6 +15,17 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <div class="dropdown-content hidden space-x-8 sm:flex">
+                        <x-dropdown-link :href="route('profile.edit')">
+                            {{ __('Profile') }}
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('roles.create')">
+                            {{ __('Create Roles') }}
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('roles.index')">
+                            {{ __('View Roles') }}
+                        </x-dropdown-link>
+                    </div>
                 </div>
             </div>
 
