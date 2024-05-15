@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Couchbase\Role;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -19,15 +21,24 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+        $permissions = Permission::all();
+        return view('roles.create', compact('permissions'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|unique:roles,name',
+            'permission' => 'required',
+    ]);
+
+        $role = Role::create(['name' => $request->name]);
+        $role->syncPermissions($request->permission);
+
+        return back()->with('success', $request->name.' Role created successfully');
     }
 
     /**

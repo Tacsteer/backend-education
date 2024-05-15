@@ -19,7 +19,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return "create";
+        return view('users.create');
     }
 
     /**
@@ -27,7 +27,14 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        return "store";
+        $validatedData = $request->validate([
+            'name' => 'required|max:30',
+            'email' => 'required|email|unique:users'
+        ]);
+        $user = new User($validatedData);
+        $user->save();
+
+        return redirect()->route('users.index')->with('success', 'Пользователь создан успешно');
     }
 
     /**
