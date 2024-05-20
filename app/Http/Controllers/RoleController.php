@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Couchbase\Role;
+use App\Models\Permission;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
